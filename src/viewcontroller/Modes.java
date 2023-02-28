@@ -1,9 +1,10 @@
 package viewcontroller;
 
-public enum Modes {
-    rectangle,
-    circle,
-    remove,
-    redo,
-    undo,
+public enum Modes 
+{
+    Rectangle,
+    Circle,
+    Remove,
+    Redo,
+    Undo,
 }
