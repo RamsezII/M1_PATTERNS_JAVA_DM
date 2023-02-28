@@ -1,6 +1,7 @@
 package viewcontroller;
 
-public enum Modes {
+public enum Modes 
+{
     Rectangle,
     Circle,
     Remove,

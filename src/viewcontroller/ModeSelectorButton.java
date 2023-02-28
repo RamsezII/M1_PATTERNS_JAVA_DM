@@ -14,6 +14,8 @@ public class ModeSelectorButton extends JButton
 
     public ModeSelectorButton(Window window) 
     {
+        setSize(Window.toolbarButtonWidth, Window.toolbarHeight);
+
         addActionListener(new ActionListener()
         {
             @Override

@@ -7,14 +7,25 @@ import java.awt.event.*;
 public class Window extends JFrame
 {
 	private Modes mode;
-	private int scale;
+	public static int width = 800;
+	public static int height = 600;
+	public static int scale = 1;
+	public static int toolbarHeight = 50;
+	public static int toolbarButtonWidth = 100;
+
+	//----------------------------------------------------------------------------------------------------------
+
+	public static void main(String[] args) 
+	{
+		new Window();
+	}
+
+	//----------------------------------------------------------------------------------------------------------
 
 	public Window() 
 	{
 		super("FormsApp");
 
-		scale = 1;
-		
 		WindowListener winList = new WindowAdapter() 
 		{
 			public void windowClosing(WindowEvent e) 
@@ -24,7 +35,7 @@ public class Window extends JFrame
 		};
 		
 		addWindowListener(winList);
-		setSize(500, 500);
+		setSize(width, height);
 		setVisible(true);
 		
 		JPanel contentPane = (JPanel) getContentPane();
@@ -38,6 +49,7 @@ public class Window extends JFrame
 	public JToolBar createToolBar() 
 	{
 		JToolBar tool_bar = new JToolBar();
+		tool_bar.setSize(width, toolbarHeight);
 		
 		ModeSelectorButton circle_button = new ModeSelectorButton(this);
 		circle_button.setName(Modes.Circle.name());
@@ -75,6 +87,21 @@ public class Window extends JFrame
 	public void SetMode(Modes mode)
 	{
 		this.mode = mode;
+		switch(mode)
+		{
+			case Circle:
+				break;
+			case Rectangle:
+				break;
+			case Redo:
+				break;
+			case Remove:
+				break;
+			case Undo:
+				break;
+			default:
+				break;			
+		}
 		System.out.println("changé de mode : " + mode);
 	}
 }
