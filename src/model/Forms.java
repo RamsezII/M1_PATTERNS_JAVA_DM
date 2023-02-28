@@ -1,6 +1,8 @@
 package model;
 
-public abstract class Forms {
+import util.*;
+
+public abstract class Forms extends AbstractListenableModel{
 	private Point origin;
 
 	public Forms(float x, float y){
@@ -19,9 +21,5 @@ public abstract class Forms {
 
 
 		//fire changement
-	}
-
-	public void draw() {
-		
 	}
 }

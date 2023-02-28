@@ -15,6 +15,7 @@ public abstract class AbstractListenableModel implements ListenableModel{
 	
 	protected void change() {
 		for(ModelListener e : listeners) {
+			e.updatedModel(this);
 		}
 	}
 }
