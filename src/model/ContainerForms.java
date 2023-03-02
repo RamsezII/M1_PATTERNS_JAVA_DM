@@ -18,11 +18,15 @@ public class ContainerForms extends AbstractListenableModel implements ModelList
     public void addForm(Forms f){
         listForms.add(f);
         f.addListener(this);
+
+        //fire changement
     }
     
     public void deleteForm(Forms f){
         listForms.remove(f);
         f.removeListener(this);
+
+        //fire changement
     }
     
     public void updatedModel(Object source){
