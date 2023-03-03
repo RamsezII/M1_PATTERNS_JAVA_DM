@@ -1,4 +1,6 @@
-package util;
+package util.listenable;
+
+import util.listener.ModelListener;
 
 public interface ListenableModel {
 	public void addListener(ModelListener e);

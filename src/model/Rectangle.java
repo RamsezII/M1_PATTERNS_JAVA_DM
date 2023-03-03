@@ -23,12 +23,11 @@ public class Rectangle extends Forms{
 
 	public void setHeight(float height) {
 		this.height = height;
-
-		//fire changement
+		fireChange();
 	}
 	
 	public void setWidth(float width) {
 		this.width = width;
-		//fire changement
+		fireChange();
 	}
 }

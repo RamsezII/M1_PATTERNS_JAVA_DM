@@ -1,6 +1,6 @@
 package model;
 
-import util.*;
+import util.listenable.AbstractListenableModel;
 
 public abstract class Forms extends AbstractListenableModel{
 	private Point origin;
@@ -18,8 +18,6 @@ public abstract class Forms extends AbstractListenableModel{
 	public void move(float vx, float vy){
 		origin.setX(origin.getX() + vx);
 		origin.setY(origin.getY() + vy);
-
-
-		//fire changement
+		fireChange();
 	}
 }

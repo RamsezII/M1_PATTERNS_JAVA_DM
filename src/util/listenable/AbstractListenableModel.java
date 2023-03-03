@@ -1,6 +1,8 @@
-package util;
+package util.listenable;
 
 import java.util.ArrayList;
+
+import util.listener.ModelListener;
 
 public abstract class AbstractListenableModel implements ListenableModel{
 	protected ArrayList<ModelListener> listeners = new ArrayList<ModelListener>();
@@ -13,7 +15,7 @@ public abstract class AbstractListenableModel implements ListenableModel{
 		listeners.remove(e);
 	}
 	
-	protected void change() {
+	protected void fireChange() {
 		for(ModelListener e : listeners) {
 			e.updatedModel(this);
 		}

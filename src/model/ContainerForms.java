@@ -2,11 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
-import util.AbstractListenableModel;
-import util.ModelListener;
+import util.listener.ContainerFormsListener;
+import util.listener.ModelListener;
 
-public class ContainerForms extends AbstractListenableModel implements ModelListener{
-    public ArrayList<Forms> listForms;
+public class ContainerForms implements ModelListener{
+    public ArrayList<Form> listForms;
+    protected ArrayList<ContainerFormsListener> listeners = new ArrayList<ContainerFormsListener>();
+
     
     
     public ContainerForms(){
@@ -15,22 +17,27 @@ public class ContainerForms extends AbstractListenableModel implements ModelList
     
 
     /* ------Methods for Form------*/
-    public void addForm(Forms f){
+    public void addForm(Form f){
         listForms.add(f);
         f.addListener(this);
-
-        //fire changement
+        
+        for(ContainerFormsListener e : listeners) {
+			e.addedForm(this);
+		}
     }
     
-    public void deleteForm(Forms f){
+    public void deleteForm(Form f){
         listForms.remove(f);
         f.removeListener(this);
 
-        //fire changement
-    }
-    
-    public void updatedModel(Object source){
-        //Doit prevenir tout ceux qui l'ecoute que la liste a changer
+        for(ContainerFormsListener e : listeners) {
+			e.deletedForm(this);
+		}
     }
 
+    public void updatedModel(Object source) {
+        for(ContainerFormsListener e : listeners){
+            e.updatedModel(source);
+        }    
+    }
 }

@@ -19,6 +19,6 @@ public class Circle extends Forms{
     /* ------Setters------*/
 	public void setRadius(float r){
         this.radius = r;
-		//fire changement
+		fireChange();
 	}
 }
