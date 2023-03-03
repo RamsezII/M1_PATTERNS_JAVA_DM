@@ -2,10 +2,10 @@ package model;
 
 import util.listenable.AbstractListenableModel;
 
-public abstract class Forms extends AbstractListenableModel{
+public abstract class Form extends AbstractListenableModel{
 	private Point origin;
 
-	public Forms(float x, float y){
+	public Form(float x, float y){
 		this.origin = new Point(x, y);
 	}
 

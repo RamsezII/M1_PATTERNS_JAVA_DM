@@ -1,7 +1,7 @@
 package model;
 
 
-public class Circle extends Forms{
+public class Circle extends Form{
 
     
     private float radius;

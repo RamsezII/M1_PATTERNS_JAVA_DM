@@ -1,6 +1,6 @@
 package model;
 
-public class Rectangle extends Forms{
+public class Rectangle extends Form{
 	private float height;
 	private float width;
 	
