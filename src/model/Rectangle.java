@@ -1,32 +1,32 @@
 package model;
 
 public class Rectangle extends Form{
-	private float height;
-	private float width;
+	private int height;
+	private int width;
 	
-	public Rectangle(float x, float y, float height, float width) {
+	public Rectangle(int x, int y, int height, int width) {
 		super(x, y);
 		this.height = height;
 		this.width = width;
 	}
 	
 	/* ------Getters------*/
-	public float getHeight() {
+	public int getHeight() {
 		return this.height;
 	}
 
-	public float getWidth() {
+	public int getWidth() {
 		return this.width;
 	}
-
+	
 	/* ------Setters------*/
 
-	public void setHeight(float height) {
+	public void setHeight(int height) {
 		this.height = height;
 		fireChange();
 	}
 	
-	public void setWidth(float width) {
+	public void setWidth(int width) {
 		this.width = width;
 		fireChange();
 	}

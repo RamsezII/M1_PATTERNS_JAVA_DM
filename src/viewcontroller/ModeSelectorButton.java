@@ -32,18 +32,18 @@ public class ModeSelectorButton extends JButton
         this.selected = value;
     }
 
-    @Override
-    protected void paintComponent(Graphics g) 
-    {
-        super.paintComponent(g);
-        Graphics2D g2D = (Graphics2D) g;
-        int w = this.getWidth();
-        int h = this.getHeight();
-
-        if (selected)
-        {
-            g2D.setColor(Color.RED);
-            g2D.drawRect(0, 0, w, h);
-        }
-    }    
+//    @Override
+//    protected void paintComponent(Graphics g) 
+//    {
+//        super.paintComponent(g);
+//        Graphics2D g2D = (Graphics2D) g;
+//        int w = this.getWidth();
+//        int h = this.getHeight();
+//
+//        if (selected)
+//        {
+//            g2D.setColor(Color.RED);
+//            g2D.drawRect(0, 0, w, h);
+//        }
+//    }    
 }

@@ -2,22 +2,20 @@ package model;
 
 
 public class Circle extends Form{
-
+    private int radius;
     
-    private float radius;
-    
-    public Circle(float x, float y, float r){
+    public Circle(int x, int y, int r){
         super(x, y);
         this.radius = r;
     }
     
     /* ------Getters------*/
-    public float getRadius(){
+    public int getRadius(){
         return this.radius;
     }
 
     /* ------Setters------*/
-	public void setRadius(float r){
+	public void setRadius(int r){
         this.radius = r;
 		fireChange();
 	}
