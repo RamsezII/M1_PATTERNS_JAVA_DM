@@ -1,21 +1,21 @@
 package viewcontroller;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import util.FormsPresence;
 import util.NoFormsPresence;
 import util.State;
-import util.listener.ContainerFormsListener;
 
 public class FormsPanel extends JPanel implements MouseListener{
 	private ArrayList<FormsView> viewsList;
+	private ArrayList<RectangleView> rectanglesViewsList;
+	private ArrayList<CircleView> circlesViewsList;
 	private Modes mode;
 	private Window parent;
 	private int x;
@@ -24,6 +24,8 @@ public class FormsPanel extends JPanel implements MouseListener{
 	
 	public FormsPanel(Window parent) {
 		this.viewsList = new ArrayList<FormsView>();
+		this.rectanglesViewsList = new ArrayList<RectangleView>();
+		this.circlesViewsList = new ArrayList<CircleView>();
 		this.addMouseListener(this);
 		this.parent = parent;
 		this.mode = this.parent.getMode();
@@ -46,18 +48,65 @@ public class FormsPanel extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// Ici on supprime les formes :
-		// Mais dans ce cas il faut trouver comment prendre la forme en entier
-		
 		if(this.parent.getMode() == Modes.Remove) {
-			// if circle
-				//this.state.removeCircle(getGraphics(), x, y, x);
-			// if rectangle
-				//this.state.removeRect(getGraphics(), x, y, y, x);
+			for(RectangleView rV : this.rectanglesViewsList) {
+				System.out.println(rV.getX());
+				if(e.getX() >= rV.getX()) {
+					this.state.removeRect(this.getGraphics(), rV.getX(), rV.getY(), rV.getHeight(), rV.getWidth());
+					rV.setDeleted(true);
+					System.out.println("Haaa");
+					this.revalidate();
+					this.repaint();	
+					this.parent.revalidate();
+					this.parent.repaint();
+				}
+				else if(e.getX() <= rV.getX() && e.getX() >= rV.getX() - rV.getWidth() && e.getY() <= rV.getY() && e.getY() >= rV.getY() - rV.getHeight()) {
+					this.state.removeRect(this.getGraphics(), rV.getX(), rV.getY(), rV.getHeight(), rV.getWidth());
+					
+					this.revalidate();
+					this.repaint();
+				}
+				else if(e.getY() >= rV.getY() && e.getY() <= rV.getY() + rV.getHeight()) {
+					this.state.removeRect(this.getGraphics(), rV.getX(), rV.getY(), rV.getHeight(), rV.getWidth());
+					this.revalidate();
+					this.repaint();
+				}
+				else if(e.getY() <= rV.getY() && e.getY() >= rV.getY() - rV.getHeight()) {
+					this.state.removeRect(this.getGraphics(), rV.getX(), rV.getY(), rV.getHeight(), rV.getWidth());
+					this.revalidate();
+					this.repaint();
+				}
+			}
+			for(CircleView rV : this.circlesViewsList) {
+				System.out.println(rV.getX());
+				if(e.getX() >= rV.getX()) {
+					this.state.removeCircle(this.getGraphics(), rV.getX(), rV.getY(), rV.getRadius(), this.getBackground());
+					rV.setDeleted(true);
+					this.revalidate();
+					this.repaint();	
+					this.parent.revalidate();
+					this.parent.repaint();
+				}
+				else if(e.getX() <= rV.getX() && e.getX() >= rV.getX() && e.getY() <= rV.getY() && e.getY() >= rV.getY()) {
+					this.state.removeCircle(this.getGraphics(), rV.getX(), rV.getY(), rV.getRadius(), this.getBackground());
+					
+					this.revalidate();
+					this.repaint();
+				}
+				else if(e.getY() >= rV.getY() && e.getY() <= rV.getY()) {
+					this.state.removeCircle(this.getGraphics(), rV.getX(), rV.getY(), rV.getRadius(), this.getBackground());
+					this.revalidate();
+					this.repaint();
+				}
+				else if(e.getY() <= rV.getY()) {
+					this.state.removeCircle(this.getGraphics(), rV.getX(), rV.getY(), rV.getRadius(), this.getBackground());
+					this.revalidate();
+					this.repaint();
+				}
+			}
 		}
-		
 	}
-
+		
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// On sauvegarde le point initial
@@ -68,19 +117,24 @@ public class FormsPanel extends JPanel implements MouseListener{
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		int distance = (int) Math.sqrt(Math.pow((e.getY()-this.y), 2) + Math.pow((e.getX()-this.x), 2));
-		System.out.println(distance);
 
 		if(this.parent.getMode() == Modes.Circle) {
-			this.addView(new CircleView(this, this.x, this.y, distance));
+			CircleView cV = new CircleView(this, this.x, this.y, distance);
+			this.addView(cV);
+			this.circlesViewsList.add(cV);
 			this.state = new FormsPresence(); // On passe à l'état FormsPresence
 		}
 		else if(this.parent.getMode() == Modes.Rectangle) {
-			this.addView(new RectangleView(this, this.x, this.y, e.getX()-this.y,e.getX()-this.x));
+			RectangleView rV = new RectangleView(this, this.x, this.y, e.getX()-this.y,e.getX()-this.x);
+			this.addView(rV);
+			this.rectanglesViewsList.add(rV);
 			this.state = new FormsPresence(); // On passe à l'état FormsPresence
 		}
 		
 		this.revalidate();
 		this.repaint();	
+		this.parent.revalidate();
+		this.parent.repaint();
 	}
 
 	@Override
@@ -93,11 +147,13 @@ public class FormsPanel extends JPanel implements MouseListener{
 		// TODO Auto-generated method stub
 	}
 	
-	public void removeCircle(Graphics g, int x, int y, int radius) {
-		this.state.removeCircle(g, x, y, radius);
+	public void removeCircle(Graphics g, int x, int y, int radius, Color bg) {
+		if(this.parent.getMode() == Modes.Remove)
+			this.state.removeCircle(g, x, y, radius, bg);
 	}
 	
 	public void removeRect(Graphics g, int x, int y, int height, int width) {
-		this.state.removeRect(g, x, y, height, width);
+		if(this.parent.getMode() == Modes.Remove)
+			this.state.removeRect(g, x, y, height, width);
 	}
 }

@@ -15,6 +15,7 @@ public class RectangleView implements FormsView, ModelListener, MouseListener{
 	private int posY;
 	private int height;
 	private int width;
+	private boolean deleted;
 	
 	public RectangleView(FormsPanel drawingPanel, int posX, int posY, int height, int width) {
 		this.drawingPanel = drawingPanel;
@@ -22,15 +23,39 @@ public class RectangleView implements FormsView, ModelListener, MouseListener{
 		this.posY = posY;
 		this.height = height;
 		this.width = width;
+		this.deleted = false;
 	}
 	
 	@Override
 	public void paint(Graphics g) {
+		if(!this.deleted) {
+
 		Rectangle newRectangle = new Rectangle(this.posX, this.posY, this.height, this.width); 
 		g.drawRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getHeight(), newRectangle.getWidth());
 		g.fillRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getHeight(), newRectangle.getWidth());
+		}
 	}
 
+	public int getX() {
+		return this.posX;
+	}
+	
+	public int getY() {
+		return this.posY;
+	}
+	
+	public int getHeight() {
+		return this.height;
+	}
+	
+	public int getWidth() {
+		return this.height;
+	}
+	
+	public void setDeleted(boolean b) {
+		this.deleted = b;
+	}
+	
 	@Override
 	public void updatedModel(Object source) {
 		System.out.println("La forme est supprimée");
@@ -66,5 +91,4 @@ public class RectangleView implements FormsView, ModelListener, MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
-
 }

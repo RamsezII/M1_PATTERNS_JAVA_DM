@@ -7,12 +7,9 @@ public class NoFormsPresence implements State{
 	public NoFormsPresence() {}
 
 	@Override
-	public void removeRect(Graphics g, int x, int y, int height, int width) {
-	}
+	public void removeRect(Graphics g, int x, int y, int height, int width) {}
 
 	@Override
-	public void removeCircle(Graphics g, int x, int y, int radius) {
-	
-	}
+	public void removeCircle(Graphics g, int x, int y, int radius, Color bg) {}
 	
 }
