@@ -7,32 +7,34 @@ import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 
 import model.Rectangle;
+import util.listener.FormListener;
 import util.listener.ModelListener;
 
-public class RectangleView implements FormsView, ModelListener, MouseListener{
+public class RectangleView implements FormsView, MouseListener{
 	private FormsPanel drawingPanel;
 	private int posX;
 	private int posY;
 	private int height;
 	private int width;
-	private boolean deleted;
+	//private boolean deleted;
+	private FormListener formListener;
 	
-	public RectangleView(FormsPanel drawingPanel, int posX, int posY, int height, int width) {
+	public RectangleView(FormsPanel drawingPanel, int posX, int posY, int width, int height, FormListener formListener) {
 		this.drawingPanel = drawingPanel;
 		this.posX = posX;
 		this.posY = posY;
-		this.height = height;
 		this.width = width;
-		this.deleted = false;
+		this.height = height;
+		this.formListener = formListener;
 	}
 	
 	@Override
 	public void paint(Graphics g) {
-		if(!this.deleted) {
-
-		Rectangle newRectangle = new Rectangle(this.posX, this.posY, this.height, this.width); 
-		g.drawRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getHeight(), newRectangle.getWidth());
-		g.fillRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getHeight(), newRectangle.getWidth());
+		//if(!this.deleted)
+		{
+		Rectangle newRectangle = new Rectangle(this.posX, this.posY, this.width, this.height);
+		g.drawRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getWidth(), newRectangle.getHeight());
+		g.fillRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getWidth(), newRectangle.getHeight());
 		}
 	}
 
@@ -48,24 +50,21 @@ public class RectangleView implements FormsView, ModelListener, MouseListener{
 		return this.height;
 	}
 	
-	public int getWidth() {
-		return this.height;
-	}
-	
-	public void setDeleted(boolean b) {
-		this.deleted = b;
-	}
-	
-	@Override
-	public void updatedModel(Object source) {
-		System.out.println("La forme est supprimée");
+	public int getWidth() {return this.width;}
+
+
+	public void delete()
+	{
+		if(formListener != null)
+			formListener.updateForm(this);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// Suppression
-		this.drawingPanel.removeRect(this.drawingPanel.getGraphics(), this.posX, this.posY, this.height, this.width);
-		this.updatedModel(this);
+		//System.out.println("La forme est clicke");
+		//this.drawingPanel.removeRect(this.drawingPanel.getGraphics(), this.posX, this.posY, this.width, this.height);
+		//this.updatedModel(this);
 	}
 	
 	@Override
@@ -91,4 +90,5 @@ public class RectangleView implements FormsView, ModelListener, MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
+
 }

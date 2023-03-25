@@ -8,6 +8,13 @@ public class Circle extends Form{
         super(x, y);
         this.radius = r;
     }
+
+
+    public Object clone()
+    {
+        Circle cloned = new Circle(getX(), getY(), getRadius());
+        return cloned;
+    }
     
     /* ------Getters------*/
     public int getRadius(){
@@ -19,4 +26,9 @@ public class Circle extends Form{
         this.radius = r;
 		fireChange();
 	}
+
+    @Override
+    public void updateForm(Object form) {
+        setAlive(false);
+    }
 }

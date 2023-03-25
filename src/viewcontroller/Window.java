@@ -1,4 +1,6 @@
 package viewcontroller;
+import model.Model;
+
 import javax.swing.*;
 
 import java.awt.BorderLayout;
@@ -13,11 +15,13 @@ public class Window extends JFrame
 	public static int scale = 1;
 	public static int toolbarHeight = 50;
 	public static int toolbarButtonWidth = 100;
+	private Model model;
 
-	public Window(int width, int height) {
+	public Window(int width, int height, Model model) {
 		super("FormsApp");
 		this.width = width;
 		this.height = height;
+		this.model = model;
 	}
 	
 	public JToolBar createToolBar() 
@@ -67,15 +71,19 @@ public class Window extends JFrame
 			case Rectangle:
 				break;
 			case Redo:
+				model.redo();
 				break;
 			case Remove:
 				break;
 			case Undo:
+				model.undo();
 				break;
 			default:
 				break;			
 		}
 		System.out.println("changé de mode : " + mode);
+
+
 	}
 	
 	public Modes getMode() {

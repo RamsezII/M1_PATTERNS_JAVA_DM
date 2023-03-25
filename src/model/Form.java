@@ -1,22 +1,34 @@
 package model;
 
 import util.listenable.AbstractListenableModel;
+import util.listener.FormListener;
 
-public abstract class Form extends AbstractListenableModel{
-	private Point origin;
+public abstract class Form extends AbstractListenableModel implements FormListener {
 	private int x;
 	private int y;
+	private boolean alive;
 	
 	public Form(int x, int y){
-		this.origin = new Point(x, y);
 		this.x = x;
 		this.y = y;
+		this.alive = true;
 	}
 
-	/* ------Getters------*/
-	public Point getOrigin(){
-		return origin;
+	public abstract Object clone();
+
+
+	public boolean isAlive()
+	{
+		return alive;
 	}
+
+	protected void setAlive(boolean alive)
+	{
+		this.alive = alive;
+	}
+
+
+	/* ------Getters------*/
 	
 	public int getX() {
 		return this.x;
@@ -28,8 +40,8 @@ public abstract class Form extends AbstractListenableModel{
 
 	/* ------Methods------*/
 	public void move(float vx, float vy){
-		origin.setX(origin.getX() + vx);
-		origin.setY(origin.getY() + vy);
+		x += vx;
+		y += vy;
 		fireChange();
 	}
 }
