@@ -1,14 +1,10 @@
-package viewcontroller;
+package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
-
 import model.Circle;
 import model.Form;
 import model.Model;
@@ -20,32 +16,26 @@ import util.listener.ModelListener;
 
 public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	private ArrayList<FormsView> viewsList;
-	//a mettre dans le modele
-	private Modes mode;
 	private int x;
 	private int y;
-	//
 	private Window parent;
-	private State state;
 	private Model refModel;
+	private Modes mode;
+	private State state;
 
 	@Override
 	public void updatedModel(Object source) {
-
-		viewsList.clear();
-		//regénérer les formesView à partir des formesModèlees
-		for(int i = 0; i < refModel.getContainerForms().getListForms().size(); i++)
-		{
+		this.viewsList.clear();
+		
+		for(int i = 0; i < refModel.getContainerForms().getListForms().size(); i++){
 			Form mForm = refModel.getContainerForms().getListForms().get(i);
 
-			if(mForm instanceof Rectangle)
-			{
+			if(mForm instanceof Rectangle){
 				Rectangle mRect = (Rectangle)mForm;
-				RectangleView rV = new RectangleView(this, mRect.getX(), mRect.getY(), mRect.getWidth(),mRect.getHeight(), mRect);
+				RectangleView rV = new RectangleView(mRect.getX(), mRect.getY(), mRect.getWidth(),mRect.getHeight(), mRect);
 				this.addView(rV);
 			}
-			if(mForm instanceof Circle)
-			{
+			if(mForm instanceof Circle){
 				Circle mCirc = (Circle)mForm;
 				CircleView rV = new CircleView(this, mCirc.getX(), mCirc.getY(), mCirc.getRadius(), mCirc);
 				this.addView(rV);
@@ -65,12 +55,11 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		this.mode = this.parent.getMode();
 		this.x = 0;
 		this.y = 0;
-		this.state = new NoFormsPresence(); // A pour etat NoFormPresence de base
+		this.state = new NoFormsPresence();
 		this.refModel = model;
 		refModel.setListener(this);
 	}
 	
-	// Pour chaques vues, le container leur demande de dessiner leur propre vue dans lui-m�me
 	@Override
 	protected void paintComponent(Graphics g) {
 		for(FormsView v : this.viewsList) {
@@ -98,34 +87,19 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 					  (rV.getWidth() +rV.getX()) < e.getX() || (rV.getHeight() +rV.getY()) < e.getY())
 						collision = false;
 
-					if(collision)
-					{
-						rV.delete();
-						refModel.deleteForm();
+					if(collision){
+						this.state.remove(rV, refModel);
 						return;
-						//this.state.removeRect(this.getGraphics(), rV.getX(), rV.getY(), rV.getWidth(), rV.getHeight());
-
-						/*this.revalidate();
-						this.repaint();
-						this.parent.revalidate();
-						this.parent.repaint();*/
 					}
 				}
-				if(fV instanceof CircleView)
-				{
+				if(fV instanceof CircleView){
 					CircleView rV = (CircleView) fV;
 					double distPtrCentre = Math.sqrt(Math.pow(e.getX()-rV.getX(), 2)  + Math.pow(e.getY()-rV.getY(), 2));
 					boolean collision = distPtrCentre < rV.getRadius();
 
-					if(collision)
-					{
-						rV.delete();
-						refModel.deleteForm();
+					if(collision){
+						this.state.remove(rV, refModel);
 						return;
-						/*this.revalidate();
-						this.repaint();
-						this.parent.revalidate();
-						this.parent.repaint();*/
 					}
 				}
 			}
@@ -141,7 +115,6 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-
 		int xmin = Math.min(e.getX(), this.x);
 		int ymin = Math.min(e.getY(), this.y);
 		int xmax = Math.max(e.getX(), this.x);
@@ -151,23 +124,12 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 
 		if(this.parent.getMode() == Modes.Circle) {
 			refModel.createCircle(this.x, this.y, distance);
-			//CircleView cV = new CircleView(this, this.x, this.y, distance);
-			//this.addView(cV);
-			//this.state = new FormsPresence(); // On passe � l'�tat FormsPresence
+			this.state = new FormsPresence();
 		}
 		else if(this.parent.getMode() == Modes.Rectangle) {
 			refModel.createRectangle(xmin, ymin, xmax-xmin,ymax-ymin);
-			//RectangleView rV = new RectangleView(this, xmin, ymin, xmax-xmin,ymax-ymin);
-			//this.addView(rV);
-			//this.state = new FormsPresence(); // On passe � l'�tat FormsPresence
+			this.state = new FormsPresence();
 		}
-
-
-		
-		/*this.revalidate();
-		this.repaint();	
-		this.parent.revalidate();
-		this.parent.repaint();*/
 	}
 
 	@Override
@@ -179,15 +141,4 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 	}
-
-	//devrait se faire sur le modeèle, pas sur la view
-	/*public void removeCircle(Graphics g, int x, int y, int radius, Color bg) {
-		if(this.parent.getMode() == Modes.Remove)
-			this.state.removeCircle(g, x, y, radius, bg);
-	}
-	
-	public void removeRect(Graphics g, int x, int y, int width, int height) {
-		if(this.parent.getMode() == Modes.Remove)
-			this.state.removeRect(g, x, y, width, height);
-	}*/
 }

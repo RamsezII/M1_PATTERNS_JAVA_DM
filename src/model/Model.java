@@ -1,15 +1,16 @@
 package model;
 
 import command.Memento;
+import util.State;
 import util.listener.ModelListener;
 
 import java.util.ArrayList;
 
 public class Model {
-    ModelListener listener;
-
+    private ModelListener listener;
     private Memento memento;
     private ContainerForms containers;
+    private State state;
 
     public Model()
     {
@@ -42,11 +43,9 @@ public class Model {
         notifyView();
     }
 
-    public void deleteForm()
-    {
+    public void deleteForm(){
         ArrayList<Form> list = new ArrayList<>();
-        for(Form fm : containers.getListForms())
-        {
+        for(Form fm : containers.getListForms()){
             if(fm.isAlive() == false)
                 list.add(fm);
         }

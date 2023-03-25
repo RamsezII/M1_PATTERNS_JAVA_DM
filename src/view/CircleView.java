@@ -1,30 +1,30 @@
-package viewcontroller;
+package view;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
-import model.Rectangle;
+import model.Circle;
 import util.listener.FormListener;
 import util.listener.ModelListener;
 
-public class RectangleView implements FormsView, MouseListener{
+public class CircleView implements FormsView, MouseListener{
 	private FormsPanel drawingPanel;
 	private int posX;
 	private int posY;
-	private int height;
-	private int width;
-	//private boolean deleted;
+	private int radius;
 	private FormListener formListener;
 	
-	public RectangleView(FormsPanel drawingPanel, int posX, int posY, int width, int height, FormListener formListener) {
+	public CircleView(FormsPanel drawingPanel, int posX, int posY, int radius, FormListener formListener) {
 		this.drawingPanel = drawingPanel;
 		this.posX = posX;
 		this.posY = posY;
-		this.width = width;
-		this.height = height;
+		this.radius = radius;
 		this.formListener = formListener;
 	}
 	
@@ -32,12 +32,11 @@ public class RectangleView implements FormsView, MouseListener{
 	public void paint(Graphics g) {
 		//if(!this.deleted)
 		{
-		Rectangle newRectangle = new Rectangle(this.posX, this.posY, this.width, this.height);
-		g.drawRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getWidth(), newRectangle.getHeight());
-		g.fillRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getWidth(), newRectangle.getHeight());
+			Circle newCircle = new Circle(this.posX, this.posY, this.radius); 
+			g.fillOval(newCircle.getX()-(newCircle.getRadius()), newCircle.getY()-(newCircle.getRadius()), newCircle.getRadius()*2, newCircle.getRadius()*2);
 		}
 	}
-
+	
 	public int getX() {
 		return this.posX;
 	}
@@ -46,30 +45,26 @@ public class RectangleView implements FormsView, MouseListener{
 		return this.posY;
 	}
 	
-	public int getHeight() {
-		return this.height;
+	public int getRadius() {
+		return this.radius;
 	}
-	
-	public int getWidth() {return this.width;}
 
-
-	public void delete()
-	{
+	@Override
+	public void delete(){
 		if(formListener != null)
-			formListener.updateForm(this);
+		formListener.updateForm(this);
 	}
+
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// Suppression
-		//System.out.println("La forme est clicke");
-		//this.drawingPanel.removeRect(this.drawingPanel.getGraphics(), this.posX, this.posY, this.width, this.height);
+		//this.drawingPanel.removeCircle(this.drawingPanel.getGraphics(), this.posX, this.posY, this.radius);
 		//this.updatedModel(this);
 	}
-	
+
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

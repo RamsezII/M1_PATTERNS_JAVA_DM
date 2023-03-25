@@ -1,15 +1,12 @@
 package util;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import model.Model;
+import view.FormsView;
 
 public class NoFormsPresence implements State{
 	public NoFormsPresence() {}
 
 	@Override
-	public void removeRect(Graphics g, int x, int y, int height, int width) {}
-
-	@Override
-	public void removeCircle(Graphics g, int x, int y, int radius, Color bg) {}
+	public void remove(FormsView fv, Model m) {}
 	
 }
