@@ -21,6 +21,12 @@ public class Rectangle extends Form{
 	
 	/* ------Setters------*/
 
+	public Object clone()
+	{
+		Rectangle cloned = new Rectangle(getX(), getY(), getWidth(), getHeight());
+		return cloned;
+	}
+
 	public void setHeight(int height) {
 		this.height = height;
 		fireChange();

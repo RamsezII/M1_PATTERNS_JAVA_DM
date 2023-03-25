@@ -42,8 +42,6 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 			{
 				Rectangle mRect = (Rectangle)mForm;
 				RectangleView rV = new RectangleView(this, mRect.getX(), mRect.getY(), mRect.getWidth(),mRect.getHeight(), mRect);
-
-
 				this.addView(rV);
 			}
 			if(mForm instanceof Circle)

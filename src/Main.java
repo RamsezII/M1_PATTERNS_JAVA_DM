@@ -18,7 +18,7 @@ public class Main {
 		//model
 		Model model = new Model();
 
-		Window mainWindow = new Window(800, 600);
+		Window mainWindow = new Window(800, 600, model);
 		
 		WindowListener winList = new WindowAdapter() 
 		{

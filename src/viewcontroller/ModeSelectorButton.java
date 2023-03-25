@@ -1,5 +1,7 @@
 package viewcontroller;
 
+import model.Model;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,7 +14,7 @@ public class ModeSelectorButton extends JButton
 {
     private boolean selected;
 
-    public ModeSelectorButton(Window window) 
+    public ModeSelectorButton(Window window)
     {
         setSize(Window.toolbarButtonWidth, Window.toolbarHeight);
 
