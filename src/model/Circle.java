@@ -19,4 +19,9 @@ public class Circle extends Form{
         this.radius = r;
 		fireChange();
 	}
+
+    @Override
+    public void updateForm(Object form) {
+        setAlive(false);
+    }
 }

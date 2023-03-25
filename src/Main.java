@@ -3,15 +3,21 @@ import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.lang.module.ModuleFinder;
 
 import javax.swing.JPanel;
 
+import model.Model;
 import viewcontroller.FormsPanel;
 import viewcontroller.Window;
 
 public class Main {
 
-	public static void main(String[] args) {	
+	public static void main(String[] args) {
+
+		//model
+		Model model = new Model();
+
 		Window mainWindow = new Window(800, 600);
 		
 		WindowListener winList = new WindowAdapter() 
@@ -24,8 +30,9 @@ public class Main {
 		
 		JPanel contentPane = (JPanel) mainWindow.getContentPane();
 		contentPane.add(mainWindow.createToolBar(), BorderLayout.NORTH);
-		
-		FormsPanel drawing_panel = new FormsPanel(mainWindow);		
+
+		//view
+		FormsPanel drawing_panel = new FormsPanel(mainWindow, model);
 		mainWindow.add(drawing_panel, BorderLayout.CENTER);
 		
 		mainWindow.addWindowListener(winList);

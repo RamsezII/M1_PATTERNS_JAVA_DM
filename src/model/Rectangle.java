@@ -30,4 +30,9 @@ public class Rectangle extends Form{
 		this.width = width;
 		fireChange();
 	}
+
+	@Override
+	public void updateForm(Object form) {
+		setAlive(false);
+	}
 }
