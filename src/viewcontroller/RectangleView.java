@@ -17,22 +17,21 @@ public class RectangleView implements FormsView, ModelListener, MouseListener{
 	private int width;
 	private boolean deleted;
 	
-	public RectangleView(FormsPanel drawingPanel, int posX, int posY, int height, int width) {
+	public RectangleView(FormsPanel drawingPanel, int posX, int posY, int width, int height) {
 		this.drawingPanel = drawingPanel;
 		this.posX = posX;
 		this.posY = posY;
-		this.height = height;
 		this.width = width;
+		this.height = height;
 		this.deleted = false;
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		if(!this.deleted) {
-
-		Rectangle newRectangle = new Rectangle(this.posX, this.posY, this.height, this.width); 
-		g.drawRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getHeight(), newRectangle.getWidth());
-		g.fillRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getHeight(), newRectangle.getWidth());
+		Rectangle newRectangle = new Rectangle(this.posX, this.posY, this.width, this.height);
+		g.drawRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getWidth(), newRectangle.getHeight());
+		g.fillRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getWidth(), newRectangle.getHeight());
 		}
 	}
 
@@ -48,9 +47,7 @@ public class RectangleView implements FormsView, ModelListener, MouseListener{
 		return this.height;
 	}
 	
-	public int getWidth() {
-		return this.height;
-	}
+	public int getWidth() {return this.width;}
 	
 	public void setDeleted(boolean b) {
 		this.deleted = b;
@@ -58,13 +55,14 @@ public class RectangleView implements FormsView, ModelListener, MouseListener{
 	
 	@Override
 	public void updatedModel(Object source) {
-		System.out.println("La forme est supprimée");
+		System.out.println("La forme est supprimï¿½e");
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// Suppression
-		this.drawingPanel.removeRect(this.drawingPanel.getGraphics(), this.posX, this.posY, this.height, this.width);
+		System.out.println("La forme est clicke");
+		this.drawingPanel.removeRect(this.drawingPanel.getGraphics(), this.posX, this.posY, this.width, this.height);
 		this.updatedModel(this);
 	}
 	

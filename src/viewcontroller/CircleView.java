@@ -31,7 +31,7 @@ public class CircleView implements FormsView, ModelListener, MouseListener{
 	public void paint(Graphics g) {
 		if(!this.deleted) {
 			Circle newCircle = new Circle(this.posX, this.posY, this.radius); 
-			g.fillOval(newCircle.getX()-(newCircle.getRadius()/2), newCircle.getY()-(newCircle.getRadius()/2), newCircle.getRadius(), newCircle.getRadius());
+			g.fillOval(newCircle.getX()-(newCircle.getRadius()), newCircle.getY()-(newCircle.getRadius()), newCircle.getRadius()*2, newCircle.getRadius()*2);
 		}
 	}
 	
@@ -53,7 +53,7 @@ public class CircleView implements FormsView, ModelListener, MouseListener{
 
 	@Override
 	public void updatedModel(Object source) {
-		System.out.println("La forme est supprimée");
+		System.out.println("La forme est supprimï¿½e");
 	}
 
 	@Override

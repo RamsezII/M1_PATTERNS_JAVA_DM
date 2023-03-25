@@ -4,7 +4,7 @@ public class Rectangle extends Form{
 	private int height;
 	private int width;
 	
-	public Rectangle(int x, int y, int height, int width) {
+	public Rectangle(int x, int y, int width, int height) {
 		super(x, y);
 		this.height = height;
 		this.width = width;
