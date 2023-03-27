@@ -80,4 +80,37 @@ public class RectangleView implements FormsView{
 		if(formListener != null)
 			formListener.updateForm(this);
 	}
+
+
+	@Override
+	public void resize(int newX, int newY) {
+
+		int shiftX = newX - posX;
+		int shiftY = newY - posY;
+
+		double newRadius = (double) Math.sqrt( shiftX*shiftX + shiftY*shiftY );
+		double currRadius = (double) Math.sqrt( width*width + height*height );
+
+		if(currRadius > 0)
+		{
+			//we compute the new scale from the current radius and the new one
+			double scale = newRadius / currRadius;
+
+			//we compute the new W and H
+			int newWidth = (int) ( (double)scale * width);
+			int newHeight = (int) ( (double)scale * height);
+
+			//we recenter around the new W and H
+			posX += width/2 - newWidth/2.f;
+			posY += height/2 - newHeight/2.f;
+
+			//we apply the new W and H
+			width = newWidth;
+			height = newHeight;
+		}
+
+
+		if(formListener != null)
+			formListener.updateForm(this);
+	}
 }

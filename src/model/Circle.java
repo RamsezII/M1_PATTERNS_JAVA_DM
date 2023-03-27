@@ -50,6 +50,8 @@ public class Circle extends Form{
         boolean isAlive = ((CircleView) form).isToDestroy() == false;
         System.out.println("new x " + ((CircleView) form).getX() + " y " + ((CircleView) form).getY());
         setXY(((CircleView) form).getX(), ((CircleView) form).getY());
+        radius = ((CircleView) form).getRadius();
+
         setAlive(isAlive);
     }
 }

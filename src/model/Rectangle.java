@@ -44,6 +44,10 @@ public class Rectangle extends Form{
 	public void updateForm(Object form) {
 		boolean isAlive = ((RectangleView) form).isToDestroy() == false;
 		setXY(((RectangleView) form).getX(), ((RectangleView) form).getY());
+
+		width = ((RectangleView) form).getWidth();
+		height = ((RectangleView) form).getHeight();
+
 		setAlive(isAlive);
 	}
 }

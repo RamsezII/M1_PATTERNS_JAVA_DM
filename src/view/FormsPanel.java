@@ -137,7 +137,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		this.x = e.getX();
 		this.y = e.getY();
 
-		if(parent.getMode() == Modes.Move ) {
+		if(parent.getMode() == Modes.Move || parent.getMode() == Modes.Resize) {
 			FormsView formSelectionnee = getCollisionWithView(e.getX(), e.getY());
 			selectedFormOnPress = formSelectionnee;//even if formSelectionnee is null
 		}
@@ -161,10 +161,13 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		else if(this.parent.getMode() == Modes.Rectangle) {
 			refModel.createRectangle(xmin, ymin, xmax-xmin,ymax-ymin);
 		}
-		else if(parent.getMode() == Modes.Move ) {
+		else if(parent.getMode() == Modes.Move || parent.getMode() == Modes.Resize) {
 			if(selectedFormOnPress != null)
 			{
-				selectedFormOnPress.move(e.getX() - x, e.getY() - y);
+				if(parent.getMode() == Modes.Move)
+					selectedFormOnPress.move(e.getX() - x, e.getY() - y);
+				if(parent.getMode() == Modes.Resize)
+					selectedFormOnPress.resize(e.getX(), e.getY());
 				refModel.updateFormsFromController();
 			}
 		}

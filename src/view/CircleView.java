@@ -73,4 +73,16 @@ public class CircleView implements FormsView{
 		if(formListener != null)
 			formListener.updateForm(this);
 	}
+
+	@Override
+	public void resize(int newX, int newY) {
+
+		int shiftX = newX - posX;
+		int shiftY = newY - posY;
+		radius = (int) Math.sqrt( shiftX*shiftX + shiftY*shiftY );
+
+		if(formListener != null)
+			formListener.updateForm(this);
+	}
+
 }
