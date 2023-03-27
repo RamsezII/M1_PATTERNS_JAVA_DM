@@ -1,95 +1,86 @@
 package model;
 
 import command.Memento;
-import util.State;
 import util.listener.ModelListener;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents the actions'functions of the software.
+ */
 public class Model {
     private ModelListener listener;
     private Memento memento;
     private ContainerForms containers;
-    private State state;
 
-    public Model()
-    {
-        listener = null;
-        memento = new Memento();
-        containers = new ContainerForms();
+    /**
+     * The constructor of this class.
+     */
+    public Model(){
+        this.listener = null;
+        this.memento = new Memento();
+        this.containers = new ContainerForms();
     }
 
-    public void setListener(ModelListener list)
-    {
-        listener = list;
+    // Getter
+    
+    public ContainerForms getContainerForms(){
+        return this.containers;
+    }
+    
+    // Setters
+    
+    public void setListener(ModelListener list){
+    	this.listener = list;
     }
 
-    public ContainerForms getContainerForms()
-    {
-        return containers;
-    }
+   // Methods 
 
-    public void createCircle(int x, int y, int radius)
-    {
-        containers.getListForms().add(new Circle(x, y, radius));
-        memento.backup(containers);
+    public void createCircle(int x, int y, int radius){
+        this.containers.getListForms().add(new Circle(x, y, radius));
+        this.memento.backup(this.containers);
         notifyView();
     }
 
-    public void createRectangle(int x, int y, int w, int h)
-    {
-        containers.getListForms().add(new Rectangle(x, y, w, h));
-        memento.backup(containers);
+    public void createRectangle(int x, int y, int w, int h){
+        this.containers.getListForms().add(new Rectangle(x, y, w, h));
+        this.memento.backup(this.containers);
         notifyView();
     }
 
     public void deleteForm(){
         ArrayList<Form> list = new ArrayList<>();
-        for(Form fm : containers.getListForms()){
+        for(Form fm : this.containers.getListForms()){
             if(fm.isAlive() == false)
                 list.add(fm);
         }
-        if(list.size() > 0)
-        {
-            memento.backup(containers);
-            containers.getListForms().removeAll(list);
+        if(list.size() > 0){
+            this.memento.backup(this.containers);
+            this.containers.getListForms().removeAll(list);
         }
 
         notifyView();
     }
 
-    public void undo()
-    {
-        ContainerForms newContainer = memento.undo(containers);
-        if(newContainer != null)
-        {
-            //System.out.println("undo");
-            //containers.log("Before");
-            containers = newContainer;
-            //containers.log("After");
-            //System.out.println(" ");
+    public void undo(){
+        ContainerForms newContainer = this.memento.undo(this.containers);
+        if(newContainer != null){
+            this.containers = newContainer;
             notifyView();
         }
     }
 
-    public void redo()
-    {
-        ContainerForms newContainer = memento.redo(containers);
-        if(newContainer != null)
-        {
-            //System.out.println("redo");
-            //containers.log("Before");
-            containers = newContainer;
-            //containers.log("After");
-            //System.out.println(" ");
+    public void redo(){
+        ContainerForms newContainer = memento.redo(this.containers);
+        if(newContainer != null){
+            this.containers = newContainer;
             notifyView();
         }
     }
 
-    public void notifyView()
-    {
+    public void notifyView(){
         if(listener != null)
-            listener.updatedModel(this);
+            this.listener.updatedModel(this);
     }
 }
 

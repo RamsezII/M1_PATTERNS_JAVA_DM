@@ -14,45 +14,26 @@ import util.NoFormsPresence;
 import util.State;
 import util.listener.ModelListener;
 
+/**
+ * This class represents the drawing panel view in the window.
+ */
 public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	private ArrayList<FormsView> viewsList;
 	private int x;
 	private int y;
 	private Window parent;
 	private Model refModel;
-	private Modes mode;
 	private State state;
 
-	@Override
-	public void updatedModel(Object source) {
-		this.viewsList.clear();
-		
-		for(int i = 0; i < refModel.getContainerForms().getListForms().size(); i++){
-			Form mForm = refModel.getContainerForms().getListForms().get(i);
-
-			if(mForm instanceof Rectangle){
-				Rectangle mRect = (Rectangle)mForm;
-				RectangleView rV = new RectangleView(mRect.getX(), mRect.getY(), mRect.getWidth(),mRect.getHeight(), mRect);
-				this.addView(rV);
-			}
-			if(mForm instanceof Circle){
-				Circle mCirc = (Circle)mForm;
-				CircleView rV = new CircleView(this, mCirc.getX(), mCirc.getY(), mCirc.getRadius(), mCirc);
-				this.addView(rV);
-			}
-		}
-
-		this.revalidate();
-		this.repaint();
-		this.parent.revalidate();
-		this.parent.repaint();
-	}
-
+	/**
+	 * The constructor of the view. Takes a reference on the main window and model.
+	 * @param parent
+	 * @param model
+	 */
 	public FormsPanel(Window parent, Model model) {
 		this.viewsList = new ArrayList<FormsView>();
 		this.addMouseListener(this);
 		this.parent = parent;
-		this.mode = this.parent.getMode();
 		this.x = 0;
 		this.y = 0;
 		this.state = new NoFormsPresence();
@@ -60,6 +41,35 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		refModel.setListener(this);
 	}
 	
+	/**
+	 * This method updates the view of this panel.
+	 */
+	@Override
+	public void updatedModel(Object source) {
+		this.viewsList.clear();
+		
+		for(int i = 0; i < refModel.getContainerForms().getListForms().size(); i++){
+			Form mForm = refModel.getContainerForms().getListForms().get(i);
+			if(mForm instanceof Rectangle){
+				Rectangle mRect = (Rectangle)mForm;
+				RectangleView rV = new RectangleView(mRect.getX(), mRect.getY(), mRect.getWidth(),mRect.getHeight(), mRect);
+				this.addView(rV);
+			}
+			if(mForm instanceof Circle){
+				Circle mCirc = (Circle)mForm;
+				CircleView rV = new CircleView(mCirc.getX(), mCirc.getY(), mCirc.getRadius(), mCirc);
+				this.addView(rV);
+			}
+		}
+		this.revalidate();
+		this.repaint();
+		this.parent.revalidate();
+		this.parent.repaint();
+	}
+	
+	/**
+	 * This method asks to the different views to update themselves.
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		for(FormsView v : this.viewsList) {
@@ -67,6 +77,10 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		}
 	}
 	
+	/**
+	 * This method adds a view to the views' list.
+	 * @param view
+	 */
 	public void addView(FormsView view) {
 		this.viewsList.add(view);
 	}
@@ -74,15 +88,12 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(this.parent.getMode() == Modes.Remove) {
-			//for (FormsView fV : this.viewsList)
-			for (int i = viewsList.size()-1; i >= 0; i--)
-			{
+			for (int i = viewsList.size()-1; i >= 0; i--){
 				FormsView fV = viewsList.get(i);
-				if(fV instanceof RectangleView)
-				{
+				if(fV instanceof RectangleView){
 					RectangleView rV = (RectangleView) fV;
 					boolean collision = true;
-
+					
 					if(rV.getX() > e.getX() || rV.getY() > e.getY() ||
 					  (rV.getWidth() +rV.getX()) < e.getX() || (rV.getHeight() +rV.getY()) < e.getY())
 						collision = false;
@@ -106,13 +117,18 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		}
 	}
 		
+	/**
+	 * This method saves the initial point of the mouse pressed.
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// On sauvegarde le point initial
 		this.x = e.getX();
 		this.y = e.getY();
 	}
 
+	/**
+	 * This method creates forms according to the mode.
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		int xmin = Math.min(e.getX(), this.x);
@@ -133,12 +149,8 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
+	public void mouseExited(MouseEvent e) {}
 }

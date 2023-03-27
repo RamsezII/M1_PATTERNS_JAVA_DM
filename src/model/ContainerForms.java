@@ -4,40 +4,34 @@ import java.util.ArrayList;
 
 public class ContainerForms {
     private ArrayList<Form> listForms;
-    //protected ArrayList<ContainerFormsListener> listeners = new ArrayList<ContainerFormsListener>();
-
 
     public ContainerForms(){
-        listForms = new ArrayList<>();
+        this.listForms = new ArrayList<>();
     }
 
-    public void log(String name)
-    {
-        System.out.println(name + " nb Forms " + listForms.size());
-        for(Form f : listForms)
-        {
+    public void log(String name){
+        System.out.println(name + " nb Forms " + this.listForms.size());
+        for(Form f : this.listForms){
             System.out.println("x " + f.getX() + " y " + f.getY());
         }
     }
 
-    public ContainerForms clone()
-    {
+    public ContainerForms clone(){
         ArrayList<Form> clonedList = new ArrayList<>();
-
-        for(Form f : listForms)
-        {
+        for(Form f : this.listForms){
             clonedList.add((Form) f.clone());
         }
 
         ContainerForms cloned = new ContainerForms();
-
-        cloned.listForms = clonedList;
+        cloned.setListForms(clonedList);
 
         return cloned;
     }
 
-    public ArrayList<Form>  getListForms()
-    {
-        return listForms;
+    public ArrayList<Form> getListForms(){
+        return this.listForms;
+    }
+    public void setListForms(ArrayList<Form> l){
+        this.listForms = l;
     }
 }

@@ -1,8 +1,5 @@
 package util;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
 import model.Model;
 import view.FormsView;
 
