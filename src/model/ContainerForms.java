@@ -9,6 +9,20 @@ public class ContainerForms {
         this.listForms = new ArrayList<>();
     }
 
+    //Getters 
+    
+    public ArrayList<Form> getListForms(){
+        return this.listForms;
+    }
+    
+    // Setters
+    
+    public void setListForms(ArrayList<Form> l){
+        this.listForms = l;
+    }
+    
+    // Methods
+    
     public void log(String name){
         System.out.println(name + " nb Forms " + this.listForms.size());
         for(Form f : this.listForms){
@@ -21,17 +35,9 @@ public class ContainerForms {
         for(Form f : this.listForms){
             clonedList.add((Form) f.clone());
         }
-
         ContainerForms cloned = new ContainerForms();
         cloned.setListForms(clonedList);
 
         return cloned;
-    }
-
-    public ArrayList<Form> getListForms(){
-        return this.listForms;
-    }
-    public void setListForms(ArrayList<Form> l){
-        this.listForms = l;
     }
 }

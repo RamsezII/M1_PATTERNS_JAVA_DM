@@ -23,8 +23,6 @@ public class Memento {
             this.redoContainers.clear();
     }
 
-
-
     public ContainerForms undo(ContainerForms currentContainerForm){
         if(this.undoContainers.size() > 0){
             ContainerForms lastInserted = this.undoContainers.get(this.undoContainers.size()-1);
