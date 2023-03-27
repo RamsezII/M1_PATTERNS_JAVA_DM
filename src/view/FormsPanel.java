@@ -21,7 +21,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	private ArrayList<FormsView> viewsList;
 	private int xOnPress;
 	private int yOnPress;
-	private FormsView selectedFormOnPress;
+	private Form selectedFormOnPress;
 	private State state;
 	private Window parent;
 	private Model refModel;
@@ -87,7 +87,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		this.viewsList.add(view);
 	}
 
-	private FormsView getCollisionWithView(int mouseX, int mouseY)
+	private Form getFormFromCollisionWithView(int mouseX, int mouseY)
 	{
 		for (int i = viewsList.size()-1; i >= 0; i--) {
 			FormsView fV = viewsList.get(i);
@@ -100,7 +100,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 					collision = false;
 
 				if (collision)
-					return fV;
+					return fV.getAssociatedForm();
 			}
 			if (fV instanceof CircleView) {
 				CircleView rV = (CircleView) fV;
@@ -108,7 +108,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 				boolean collision = distPtrCentre < rV.getRadius();
 
 				if (collision)
-					return fV;
+					return fV.getAssociatedForm();
 			}
 		}
 
@@ -118,7 +118,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(this.parent.getMode() == Modes.Remove && this.state instanceof FormsPresence) {
-			FormsView formSelectionnee = getCollisionWithView(e.getX(), e.getY());
+			Form formSelectionnee = getFormFromCollisionWithView(e.getX(), e.getY());
 
 			if(formSelectionnee != null){
 				this.state.remove(formSelectionnee, refModel);
@@ -137,7 +137,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		this.yOnPress = e.getY();
 
 		if(parent.getMode() == Modes.Move || parent.getMode() == Modes.Resize) {
-			FormsView formSelectionnee = getCollisionWithView(e.getX(), e.getY());
+			Form formSelectionnee = getFormFromCollisionWithView(e.getX(), e.getY());
 			selectedFormOnPress = formSelectionnee;//even if formSelectionnee is null
 		}
 	}
@@ -166,7 +166,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 			if(selectedFormOnPress != null)
 			{
 				//The controller ask for the memento to do a backup
-				refModel.backupBeforeChange();
+				//refModel.backupBeforeChange();
 
 				//The controller applies the transformation on
 				if(parent.getMode() == Modes.Move)
@@ -175,7 +175,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 					selectedFormOnPress.resize(e.getX(), e.getY());
 
 				//The controller updates the Forms
-				refModel.updateFormsFromController();
+				//refModel.updateFormsFromController();
 			}
 		}
 		//When the mouse is released, we reset the selectFormOnPress

@@ -1,5 +1,6 @@
 package util;
 
+import model.Form;
 import model.Model;
 import view.FormsView;
 
@@ -13,8 +14,7 @@ public class FormsPresence implements State{	//to remove
 	 * This method calls the removing of a form.
 	 */
 	@Override
-	public void remove(FormsView fV, Model m) {
+	public void remove(Form fV, Model m) {
 		fV.delete();
-		m.updateFormsFromController();
 	}
 }

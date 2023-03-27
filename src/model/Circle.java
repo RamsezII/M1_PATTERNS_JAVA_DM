@@ -37,19 +37,41 @@ public class Circle extends Form{
     
 	public void setRadius(int r){
         this.radius = r;
-		fireChange();
 	}
 
-	/**
-	 * This method sets the circle to "not alive" when it is updated.
-	 */
-    @Override
-    public void updateForm(Object form) {
-        boolean isAlive = ((CircleView) form).isToDestroy() == false;
 
-        setXY(((CircleView) form).getX(), ((CircleView) form).getY());
-        radius = ((CircleView) form).getRadius();
+    /**
+     * This method informs the form is has been deleted
+     */
+    public void delete(){
+        fireBackupMemento();
+        setAlive(false);
+        fireChange();
+    }
 
-        setAlive(isAlive);
+    /**
+     * Function that move a FormView, and then notify the form from our model of a change
+     * @param shiftX (ReleaseClickPosition - PressClickPosition).x
+     * @param shiftY (ReleaseClickPosition - PressClickPosition).y
+     */
+    public void move(int shiftX, int shiftY){
+
+        fireBackupMemento();
+        setXY( getX() + shiftX, getY()+shiftY );
+        fireChange();
+    }
+
+    /**
+     * Function that resize a FormView, and then notify the form from our model of a change
+     * @param newX
+     * @param newY
+     */
+    public void resize(int newX, int newY) {
+
+        fireBackupMemento();
+        int shiftX = newX - getX();
+        int shiftY = newY - getY();
+        radius = (int) Math.sqrt( shiftX*shiftX + shiftY*shiftY );
+        fireChange();
     }
 }

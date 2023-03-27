@@ -1,6 +1,7 @@
 package model;
 
 import command.Memento;
+import util.listener.FormListener;
 import util.listener.ModelListener;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 /**
  * This class represents the actions'functions of the software.
  */
-public class Model {
+public class Model implements FormListener {
     private ModelListener listener;
     private Memento memento;
     private ContainerForms containers;
@@ -44,7 +45,9 @@ public class Model {
      */
     public void createCircle(int x, int y, int radius){
         backupBeforeChange();
-        containers.getListForms().add(new Circle(x, y, radius));
+        Circle circ = new Circle(x, y, radius);
+        circ.setListener(this);
+        containers.getListForms().add(circ);
         notifyView();
     }
 
@@ -57,7 +60,9 @@ public class Model {
      */
     public void createRectangle(int x, int y, int w, int h){
         backupBeforeChange();
-        containers.getListForms().add(new Rectangle(x, y, w, h));
+        Rectangle rect = new Rectangle(x, y, w, h);
+        rect.setListener(this);
+        containers.getListForms().add(rect);
         notifyView();
     }
 
@@ -73,7 +78,7 @@ public class Model {
     /**
      * Delete all form which are not alive anymore and notify the view of a change
      */
-    public void updateFormsFromController(){
+    public void updateAndDeleteFormNotAlive(){
         ArrayList<Form> list = new ArrayList<>();
 
         for(Form fm : containers.getListForms()){
@@ -116,6 +121,18 @@ public class Model {
     public void notifyView(){
         if(listener != null)
             listener.updatedModel(this);
+    }
+
+    @Override
+    public void backupMemento(Object form) {
+        backupBeforeChange();
+    }
+
+    @Override
+    public void updatedForm(Object form) {
+
+        updateAndDeleteFormNotAlive();
+        notifyView();
     }
 }
 
