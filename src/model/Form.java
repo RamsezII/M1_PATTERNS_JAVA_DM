@@ -48,8 +48,8 @@ public abstract class Form extends AbstractListenableModel implements FormListen
 
 	/**
 	 * This method updates the form when it moved.
-	 * @param vx
-	 * @param vy
+	 * @param x
+	 * @param y
 	 */
 	public void setXY(int x, int y){
 		this.x = x;

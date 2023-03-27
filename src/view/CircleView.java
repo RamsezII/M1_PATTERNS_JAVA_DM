@@ -10,9 +10,11 @@ import util.listener.FormListener;
 public class CircleView implements FormsView{
 	private int posX;
 	private int posY;
-	private int radius;
 	private FormListener formListener;
 	private boolean toDestroy = false;
+
+	private int radius;
+
 	
 	/**
 	 * The constructor of the view. Takes dimensions and listener on a form.
@@ -55,7 +57,7 @@ public class CircleView implements FormsView{
 	}
 	
 	/**
-	 * This method informs if the form is removed.
+	 * This method informs the form is has been deleted
 	 */
 	@Override
 	public void delete(){
@@ -65,6 +67,11 @@ public class CircleView implements FormsView{
 			formListener.updateForm(this);
 	}
 
+	/**
+	 * Function that move a FormView, and then notify the form from our model of a change
+	 * @param shiftX (ReleaseClickPosition - PressClickPosition).x
+	 * @param shiftY (ReleaseClickPosition - PressClickPosition).y
+	 */
 	@Override
 	public void move(int shiftX, int shiftY){
 		posX += shiftX;
@@ -74,6 +81,11 @@ public class CircleView implements FormsView{
 			formListener.updateForm(this);
 	}
 
+	/**
+	 * Function that resize a FormView, and then notify the form from our model of a change
+	 * @param newX
+	 * @param newY
+	 */
 	@Override
 	public void resize(int newX, int newY) {
 

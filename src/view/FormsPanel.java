@@ -20,8 +20,8 @@ import util.listener.ModelListener;
 public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	private ArrayList<FormsView> viewsList;
 	//
-	private int x;
-	private int y;
+	private int xOnPress;
+	private int yOnPress;
 	private FormsView selectedFormOnPress;
 	//
 
@@ -37,8 +37,8 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		this.viewsList = new ArrayList<FormsView>();
 		this.addMouseListener(this);
 		this.parent = parent;
-		this.x = 0;
-		this.y = 0;
+		this.xOnPress = 0;
+		this.yOnPress = 0;
 		this.refModel = model;
 		refModel.setListener(this);
 		selectedFormOnPress = null;
@@ -134,8 +134,8 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
-		this.x = e.getX();
-		this.y = e.getY();
+		this.xOnPress = e.getX();
+		this.yOnPress = e.getY();
 
 		if(parent.getMode() == Modes.Move || parent.getMode() == Modes.Resize) {
 			FormsView formSelectionnee = getCollisionWithView(e.getX(), e.getY());
@@ -148,15 +148,15 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		int xmin = Math.min(e.getX(), this.x);
-		int ymin = Math.min(e.getY(), this.y);
-		int xmax = Math.max(e.getX(), this.x);
-		int ymax = Math.max(e.getY(), this.y);
+		int xmin = Math.min(e.getX(), this.xOnPress);
+		int ymin = Math.min(e.getY(), this.yOnPress);
+		int xmax = Math.max(e.getX(), this.xOnPress);
+		int ymax = Math.max(e.getY(), this.yOnPress);
 
 		int distance = (int) Math.sqrt(Math.pow((xmax-xmin), 2) + Math.pow((ymax-ymin), 2));
 
 		if(this.parent.getMode() == Modes.Circle) {
-			refModel.createCircle(this.x, this.y, distance);
+			refModel.createCircle(this.xOnPress, this.yOnPress, distance);
 		}
 		else if(this.parent.getMode() == Modes.Rectangle) {
 			refModel.createRectangle(xmin, ymin, xmax-xmin,ymax-ymin);
@@ -164,15 +164,20 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		else if(parent.getMode() == Modes.Move || parent.getMode() == Modes.Resize) {
 			if(selectedFormOnPress != null)
 			{
+				//The controller ask for the memento to do a backup
 				refModel.backupBeforeChange();
+
+				//The controller applies the transformation on
 				if(parent.getMode() == Modes.Move)
-					selectedFormOnPress.move(e.getX() - x, e.getY() - y);
+					selectedFormOnPress.move(e.getX() - xOnPress, e.getY() - yOnPress);
 				if(parent.getMode() == Modes.Resize)
 					selectedFormOnPress.resize(e.getX(), e.getY());
+
+				//The controller updates the Forms
 				refModel.updateFormsFromController();
 			}
 		}
-
+		//When the mouse is released, we reset the selectFormOnPress
 		selectedFormOnPress = null;
 	}
 

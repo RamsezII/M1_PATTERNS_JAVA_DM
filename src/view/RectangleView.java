@@ -8,12 +8,12 @@ import util.listener.FormListener;
  * This class represents a view for a rectangle form.
  */
 public class RectangleView implements FormsView{
-	private FormListener formListener;
 	private int posX;
 	private int posY;
+	private FormListener formListener;
+	private boolean toDestroy;
 	private int height;
 	private int width;
-	private boolean toDestroy;
 	
 	/**
 	 * The constructor of the view. Takes dimensions and listener on a form.
@@ -64,7 +64,7 @@ public class RectangleView implements FormsView{
 	}
 
 	/**
-	 * This method informs if the form is removed.
+	 * This method informs the form it has been deleted
 	 */
 	@Override
 	public void delete(){
@@ -72,6 +72,11 @@ public class RectangleView implements FormsView{
 		if(formListener != null)
 			formListener.updateForm(this);
 	}
+	/**
+	 * Function that move a FormView, and then notify the form from our model of a change
+	 * @param shiftX (ReleaseClickPosition - PressClickPosition).x
+	 * @param shiftY (ReleaseClickPosition - PressClickPosition).y
+	 */
 	@Override
 	public void move(int shiftX, int shiftY){
 		posX += shiftX;
@@ -81,7 +86,11 @@ public class RectangleView implements FormsView{
 			formListener.updateForm(this);
 	}
 
-
+	/**
+	 * Function that resize a FormView, and then notify the form from our model of a change
+	 * @param newX
+	 * @param newY
+	 */
 	@Override
 	public void resize(int newX, int newY) {
 
