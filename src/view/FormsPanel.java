@@ -19,11 +19,14 @@ import util.listener.ModelListener;
  */
 public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	private ArrayList<FormsView> viewsList;
+	//
 	private int x;
 	private int y;
+	private FormsView selectedFormOnPress;
+	//
+
 	private Window parent;
 	private Model refModel;
-	private State state;
 
 	/**
 	 * The constructor of the view. Takes a reference on the main window and model.
@@ -36,9 +39,9 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		this.parent = parent;
 		this.x = 0;
 		this.y = 0;
-		this.state = new NoFormsPresence();
 		this.refModel = model;
 		refModel.setListener(this);
+		selectedFormOnPress = null;
 	}
 	
 	/**
@@ -85,34 +88,43 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		this.viewsList.add(view);
 	}
 
+	private FormsView getCollisionWithView(int mouseX, int mouseY)
+	{
+		for (int i = viewsList.size()-1; i >= 0; i--) {
+			FormsView fV = viewsList.get(i);
+			if (fV instanceof RectangleView) {
+				RectangleView rV = (RectangleView) fV;
+				boolean collision = true;
+
+				if (rV.getX() > mouseX || rV.getY() > mouseY ||
+						(rV.getWidth() + rV.getX()) < mouseX || (rV.getHeight() + rV.getY()) < mouseY)
+					collision = false;
+
+				if (collision)
+					return fV;
+			}
+			if (fV instanceof CircleView) {
+				CircleView rV = (CircleView) fV;
+				double distPtrCentre = Math.sqrt(Math.pow(mouseX - rV.getX(), 2) + Math.pow(mouseY - rV.getY(), 2));
+				boolean collision = distPtrCentre < rV.getRadius();
+
+				if (collision)
+					return fV;
+			}
+		}
+
+		return null;
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(this.parent.getMode() == Modes.Remove) {
-			for (int i = viewsList.size()-1; i >= 0; i--){
-				FormsView fV = viewsList.get(i);
-				if(fV instanceof RectangleView){
-					RectangleView rV = (RectangleView) fV;
-					boolean collision = true;
-					
-					if(rV.getX() > e.getX() || rV.getY() > e.getY() ||
-					  (rV.getWidth() +rV.getX()) < e.getX() || (rV.getHeight() +rV.getY()) < e.getY())
-						collision = false;
+			FormsView formSelectionnee = getCollisionWithView(e.getX(), e.getY());
 
-					if(collision){
-						this.state.remove(rV, refModel);
-						return;
-					}
-				}
-				if(fV instanceof CircleView){
-					CircleView rV = (CircleView) fV;
-					double distPtrCentre = Math.sqrt(Math.pow(e.getX()-rV.getX(), 2)  + Math.pow(e.getY()-rV.getY(), 2));
-					boolean collision = distPtrCentre < rV.getRadius();
-
-					if(collision){
-						this.state.remove(rV, refModel);
-						return;
-					}
-				}
+			if(formSelectionnee != null)
+			{
+				formSelectionnee.delete();
+				refModel.updateFormsFromController();
 			}
 		}
 	}
@@ -124,6 +136,11 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	public void mousePressed(MouseEvent e) {
 		this.x = e.getX();
 		this.y = e.getY();
+
+		if(parent.getMode() == Modes.Move || parent.getMode() == Modes.Resize) {
+			FormsView formSelectionnee = getCollisionWithView(e.getX(), e.getY());
+			selectedFormOnPress = formSelectionnee;//even if formSelectionnee is null
+		}
 	}
 
 	/**
@@ -140,12 +157,22 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 
 		if(this.parent.getMode() == Modes.Circle) {
 			refModel.createCircle(this.x, this.y, distance);
-			this.state = new FormsPresence();
 		}
 		else if(this.parent.getMode() == Modes.Rectangle) {
 			refModel.createRectangle(xmin, ymin, xmax-xmin,ymax-ymin);
-			this.state = new FormsPresence();
 		}
+		else if(parent.getMode() == Modes.Move || parent.getMode() == Modes.Resize) {
+			if(selectedFormOnPress != null)
+			{
+				if(parent.getMode() == Modes.Move)
+					selectedFormOnPress.move(e.getX() - x, e.getY() - y);
+				if(parent.getMode() == Modes.Resize)
+					selectedFormOnPress.resize(e.getX(), e.getY());
+				refModel.updateFormsFromController();
+			}
+		}
+
+		selectedFormOnPress = null;
 	}
 
 	@Override

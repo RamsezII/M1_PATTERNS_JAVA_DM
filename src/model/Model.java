@@ -64,8 +64,9 @@ public class Model {
     /**
      * Delete all form which are not alive anymore and notify the view of a change
      */
-    public void deleteForm(){
+    public void updateFormsFromController(){
         ArrayList<Form> list = new ArrayList<>();
+
         for(Form fm : containers.getListForms()){
             if(fm.isAlive() == false)
                 list.add(fm);
@@ -79,7 +80,7 @@ public class Model {
     }
 
     /**
-     * Undo change, and notifiy the View
+     * Undo change, and notify the View
      */
     public void undo(){
         ContainerForms newContainer = this.memento.undo(this.containers);

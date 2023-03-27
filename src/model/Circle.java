@@ -1,5 +1,8 @@
 package model;
 
+import view.CircleView;
+import view.RectangleView;
+
 /**
  * This class represents a circle from the point of view of the model.
  */
@@ -43,6 +46,12 @@ public class Circle extends Form{
 	 */
     @Override
     public void updateForm(Object form) {
-        setAlive(false);
+
+        boolean isAlive = ((CircleView) form).isToDestroy() == false;
+        System.out.println("new x " + ((CircleView) form).getX() + " y " + ((CircleView) form).getY());
+        setXY(((CircleView) form).getX(), ((CircleView) form).getY());
+        radius = ((CircleView) form).getRadius();
+
+        setAlive(isAlive);
     }
 }

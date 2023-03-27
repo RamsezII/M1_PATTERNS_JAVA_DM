@@ -9,4 +9,6 @@ public enum Modes {
     Remove,
     Redo,
     Undo,
+    Move,
+    Resize
 }

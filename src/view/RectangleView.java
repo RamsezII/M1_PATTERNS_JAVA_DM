@@ -13,6 +13,7 @@ public class RectangleView implements FormsView{
 	private int posY;
 	private int height;
 	private int width;
+	private boolean toDestroy;
 	
 	/**
 	 * The constructor of the view. Takes dimensions and listener on a form.
@@ -29,10 +30,13 @@ public class RectangleView implements FormsView{
 		this.width = width;
 		this.height = height;
 		this.formListener = formListener;
+		toDestroy = false;
 	}
 	
 	//Getters
-	
+
+	public boolean isToDestroy() { return toDestroy; }
+
 	public int getX() {
 		return this.posX;
 	}
@@ -64,6 +68,48 @@ public class RectangleView implements FormsView{
 	 */
 	@Override
 	public void delete(){
+		toDestroy = true;
+		if(formListener != null)
+			formListener.updateForm(this);
+	}
+	@Override
+	public void move(int shiftX, int shiftY){
+		posX += shiftX;
+		posY += shiftY;
+
+		if(formListener != null)
+			formListener.updateForm(this);
+	}
+
+
+	@Override
+	public void resize(int newX, int newY) {
+
+		int shiftX = newX - posX;
+		int shiftY = newY - posY;
+
+		double newRadius = (double) Math.sqrt( shiftX*shiftX + shiftY*shiftY );
+		double currRadius = (double) Math.sqrt( width*width + height*height );
+
+		if(currRadius > 0)
+		{
+			//we compute the new scale from the current radius and the new one
+			double scale = newRadius / currRadius;
+
+			//we compute the new W and H
+			int newWidth = (int) ( (double)scale * width);
+			int newHeight = (int) ( (double)scale * height);
+
+			//we recenter around the new W and H
+			posX += width/2 - newWidth/2.f;
+			posY += height/2 - newHeight/2.f;
+
+			//we apply the new W and H
+			width = newWidth;
+			height = newHeight;
+		}
+
+
 		if(formListener != null)
 			formListener.updateForm(this);
 	}

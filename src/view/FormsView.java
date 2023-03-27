@@ -8,4 +8,6 @@ import java.awt.Graphics;
 public interface FormsView {
 	public void paint(Graphics g);
 	public void delete();
+	public void move(int shiftX, int shiftY);
+	public void resize(int newX, int newY);
 }
