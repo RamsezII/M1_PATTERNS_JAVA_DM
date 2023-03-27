@@ -164,6 +164,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		else if(parent.getMode() == Modes.Move || parent.getMode() == Modes.Resize) {
 			if(selectedFormOnPress != null)
 			{
+				refModel.backupBeforeChange();
 				if(parent.getMode() == Modes.Move)
 					selectedFormOnPress.move(e.getX() - x, e.getY() - y);
 				if(parent.getMode() == Modes.Resize)

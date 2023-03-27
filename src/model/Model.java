@@ -43,7 +43,7 @@ public class Model {
      * @param radius radius of our circle
      */
     public void createCircle(int x, int y, int radius){
-        memento.backup(this.containers);
+        backupBeforeChange();
         containers.getListForms().add(new Circle(x, y, radius));
         notifyView();
     }
@@ -56,9 +56,18 @@ public class Model {
      * @param h height
      */
     public void createRectangle(int x, int y, int w, int h){
-        memento.backup(this.containers);
+        backupBeforeChange();
         containers.getListForms().add(new Rectangle(x, y, w, h));
         notifyView();
+    }
+
+
+    /**
+     * Backup the change into the memento
+     */
+    public void backupBeforeChange()
+    {
+        memento.backup(this.containers);
     }
 
     /**
