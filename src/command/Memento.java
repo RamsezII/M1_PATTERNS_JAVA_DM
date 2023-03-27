@@ -12,11 +12,11 @@ public class Memento {
 
     //undoContainers is a list holding the X previous State of the game, it used when we want to undo changes and go back to previous states
     private ArrayList<ContainerForms> undoContainers;
-    //redoContainers is a list holding the X State that have undid, it used when we want to reapply the change we undid
+    //redoContainers is a list holding the X State that have undid, it used when we want to re apply the change we undid
     private ArrayList<ContainerForms> redoContainers;
 
     /**
-     * This Constructor initialise two lists : an Undo list and a redo list
+     * This Constructor initializes two lists : an Undo list and a redo list
      */
     public Memento(){
         this.undoContainers = new ArrayList<>();
@@ -37,7 +37,7 @@ public class Memento {
     }
 
     /**
-     * This function undo change : it store the current State into the redo list, pop the last State from the undo list, and return the new State which has been poped from the undo list
+     * This function undo change : it store the current State into the redo list, pop the last State from the undo list, and return the new State which has been popped from the undo list
      * @param currentState the current State of the game, which we put into the redo list
      * @return the new State we want to apply to our Model
      */
@@ -54,7 +54,7 @@ public class Memento {
     }
 
     /**
-     * This function redo change made after an undo : it store the current State into the undo list, pop the first State from the redo list, and return the new State which has been poped from the redo list
+     * This function redo change made after an undo : it store the current State into the undo list, pop the first State from the redo list, and return the new State which has been popped from the redo list
      * @param currentState the current State of the game, which we put into the undo list
      * @return the new State we want to apply to our Model
      */

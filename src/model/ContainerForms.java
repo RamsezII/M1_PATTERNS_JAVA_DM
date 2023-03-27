@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents a form container.
+ */
 public class ContainerForms {
     private ArrayList<Form> listForms;
 

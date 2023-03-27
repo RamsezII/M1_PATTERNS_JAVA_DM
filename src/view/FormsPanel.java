@@ -19,12 +19,10 @@ import util.listener.ModelListener;
  */
 public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	private ArrayList<FormsView> viewsList;
-	//
 	private int xOnPress;
 	private int yOnPress;
 	private FormsView selectedFormOnPress;
-	//
-
+	private State state;
 	private Window parent;
 	private Model refModel;
 
@@ -42,6 +40,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		this.refModel = model;
 		refModel.setListener(this);
 		selectedFormOnPress = null;
+		this.state = new NoFormsPresence();
 	}
 	
 	/**
@@ -118,13 +117,13 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if(this.parent.getMode() == Modes.Remove) {
+		if(this.parent.getMode() == Modes.Remove && this.state instanceof FormsPresence) {
 			FormsView formSelectionnee = getCollisionWithView(e.getX(), e.getY());
 
-			if(formSelectionnee != null)
-			{
-				formSelectionnee.delete();
-				refModel.updateFormsFromController();
+			if(formSelectionnee != null){
+				this.state.remove(formSelectionnee, refModel);
+				if(refModel.getContainerForms().getListForms().size() == 0)
+					this.state = new NoFormsPresence();
 			}
 		}
 	}
@@ -157,9 +156,11 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 
 		if(this.parent.getMode() == Modes.Circle) {
 			refModel.createCircle(this.xOnPress, this.yOnPress, distance);
+			this.state = new FormsPresence();
 		}
 		else if(this.parent.getMode() == Modes.Rectangle) {
 			refModel.createRectangle(xmin, ymin, xmax-xmin,ymax-ymin);
+			this.state = new FormsPresence();
 		}
 		else if(parent.getMode() == Modes.Move || parent.getMode() == Modes.Resize) {
 			if(selectedFormOnPress != null)

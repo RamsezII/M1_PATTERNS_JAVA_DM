@@ -109,7 +109,7 @@ public class RectangleView implements FormsView{
 			int newWidth = (int) ( (double)scale * width);
 			int newHeight = (int) ( (double)scale * height);
 
-			//we recenter around the new W and H
+			//we re center around the new W and H
 			posX += width/2 - newWidth/2.f;
 			posY += height/2 - newHeight/2.f;
 
@@ -117,7 +117,6 @@ public class RectangleView implements FormsView{
 			width = newWidth;
 			height = newHeight;
 		}
-
 
 		if(formListener != null)
 			formListener.updateForm(this);

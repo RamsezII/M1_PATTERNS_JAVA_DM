@@ -1,7 +1,6 @@
 package model;
 
 import view.CircleView;
-import view.RectangleView;
 
 /**
  * This class represents a circle from the point of view of the model.
@@ -46,7 +45,6 @@ public class Circle extends Form{
 	 */
     @Override
     public void updateForm(Object form) {
-
         boolean isAlive = ((CircleView) form).isToDestroy() == false;
 
         setXY(((CircleView) form).getX(), ((CircleView) form).getY());
