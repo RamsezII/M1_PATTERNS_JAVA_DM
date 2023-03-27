@@ -45,7 +45,7 @@ public class Window extends JFrame{
 	
 	/**
 	 * This method sets the current mode.
-	 * @param A new mode.
+	 * @param mode new mode.
 	 */
 	public void setMode(Modes mode){
 		this.mode = mode;
@@ -103,6 +103,20 @@ public class Window extends JFrame{
 		redo_button.setIcon(new ImageIcon(getClass().getClassLoader().getResource("bin/Redo.png")));
 		redo_button.setToolTipText("Redo");
 		tool_bar.add(redo_button);
+
+		// Move button
+		ModeSelectorButton move_button = new ModeSelectorButton(this);
+		move_button.setName(Modes.Move.name());
+		move_button.setIcon(new ImageIcon(getClass().getClassLoader().getResource("bin/Move.png")));
+		move_button.setToolTipText("Move");
+		tool_bar.add(move_button);
+
+		// Resize button
+		ModeSelectorButton resize_button = new ModeSelectorButton(this);
+		resize_button.setName(Modes.Resize.name());
+		resize_button.setIcon(new ImageIcon(getClass().getClassLoader().getResource("bin/Resize.png")));
+		resize_button.setToolTipText("Resize");
+		tool_bar.add(resize_button);
 		
 		return tool_bar;
 	}

@@ -18,8 +18,7 @@ public class CircleView implements FormsView{
 	 * 
 	 * @param posX
 	 * @param posY
-	 * @param width
-	 * @param height
+	 * @param radius
 	 * @param formListener
 	 */
 	public CircleView(int posX, int posY, int radius, FormListener formListener) {

@@ -85,35 +85,41 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		this.viewsList.add(view);
 	}
 
+	private FormsView getCollisionWithView(int mouseX, int mouseY)
+	{
+		for (int i = viewsList.size()-1; i >= 0; i--) {
+			FormsView fV = viewsList.get(i);
+			if (fV instanceof RectangleView) {
+				RectangleView rV = (RectangleView) fV;
+				boolean collision = true;
+
+				if (rV.getX() > mouseX || rV.getY() > mouseY ||
+						(rV.getWidth() + rV.getX()) < mouseX || (rV.getHeight() + rV.getY()) < mouseY)
+					collision = false;
+
+				if (collision)
+					return fV;
+			}
+			if (fV instanceof CircleView) {
+				CircleView rV = (CircleView) fV;
+				double distPtrCentre = Math.sqrt(Math.pow(mouseX - rV.getX(), 2) + Math.pow(mouseY - rV.getY(), 2));
+				boolean collision = distPtrCentre < rV.getRadius();
+
+				if (collision)
+					return fV;
+			}
+		}
+
+		return null;
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(this.parent.getMode() == Modes.Remove) {
-			for (int i = viewsList.size()-1; i >= 0; i--){
-				FormsView fV = viewsList.get(i);
-				if(fV instanceof RectangleView){
-					RectangleView rV = (RectangleView) fV;
-					boolean collision = true;
-					
-					if(rV.getX() > e.getX() || rV.getY() > e.getY() ||
-					  (rV.getWidth() +rV.getX()) < e.getX() || (rV.getHeight() +rV.getY()) < e.getY())
-						collision = false;
+			FormsView formSelectionnee = getCollisionWithView(e.getX(), e.getY());
 
-					if(collision){
-						this.state.remove(rV, refModel);
-						return;
-					}
-				}
-				if(fV instanceof CircleView){
-					CircleView rV = (CircleView) fV;
-					double distPtrCentre = Math.sqrt(Math.pow(e.getX()-rV.getX(), 2)  + Math.pow(e.getY()-rV.getY(), 2));
-					boolean collision = distPtrCentre < rV.getRadius();
-
-					if(collision){
-						this.state.remove(rV, refModel);
-						return;
-					}
-				}
-			}
+			if(formSelectionnee != null)
+				state.remove(formSelectionnee, refModel);
 		}
 	}
 		
@@ -124,6 +130,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	public void mousePressed(MouseEvent e) {
 		this.x = e.getX();
 		this.y = e.getY();
+
 	}
 
 	/**
