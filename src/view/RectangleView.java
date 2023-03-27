@@ -13,7 +13,6 @@ public class RectangleView implements FormsView{
 	private int posX;
 	private int posY;
 	private Form associatedForm;
-	private boolean toDestroy;
 	private int height;
 	private int width;
 	
@@ -32,12 +31,9 @@ public class RectangleView implements FormsView{
 		this.width = width;
 		this.height = height;
 		this.associatedForm = associatedForm;
-		toDestroy = false;
 	}
 	
 	//Getters
-
-	public boolean isToDestroy() { return toDestroy; }
 
 	public int getX() {
 		return this.posX;

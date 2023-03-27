@@ -12,8 +12,6 @@ public class CircleView implements FormsView{
 	private int posX;
 	private int posY;
 	private Form formAssociated;
-	private boolean toDestroy = false;
-
 	private int radius;
 
 	
@@ -30,12 +28,10 @@ public class CircleView implements FormsView{
 		this.posY = posY;
 		this.radius = radius;
 		this.formAssociated = formAssociated;
-		this.toDestroy = false;
 	}
 
 
 	// Getters
-	public boolean isToDestroy() { return toDestroy; }
 	public int getX() {
 		return this.posX;
 	}
