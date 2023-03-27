@@ -1,5 +1,6 @@
 package util;
 
+import model.Form;
 import model.Model;
 import view.FormsView;
 
@@ -13,5 +14,5 @@ public class NoFormsPresence implements State{
 	 * This method calls the removing of a form. It doesn't do anything because there is nothing in the drawing panel.
 	 */
 	@Override
-	public void remove(FormsView fv, Model m) {}	
+	public void remove(Form fv, Model m) {}
 }

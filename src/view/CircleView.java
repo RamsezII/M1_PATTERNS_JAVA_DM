@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Graphics;
 import model.Circle;
+import model.Form;
 import util.listener.FormListener;
 
 /**
@@ -10,7 +11,7 @@ import util.listener.FormListener;
 public class CircleView implements FormsView{
 	private int posX;
 	private int posY;
-	private FormListener formListener;
+	private Form formAssociated;
 	private boolean toDestroy = false;
 
 	private int radius;
@@ -22,13 +23,13 @@ public class CircleView implements FormsView{
 	 * @param posX
 	 * @param posY
 	 * @param radius
-	 * @param formListener
+	 * @param formAssociated
 	 */
-	public CircleView(int posX, int posY, int radius, FormListener formListener) {
+	public CircleView(int posX, int posY, int radius, Form formAssociated) {
 		this.posX = posX;
 		this.posY = posY;
 		this.radius = radius;
-		this.formListener = formListener;
+		this.formAssociated = formAssociated;
 		this.toDestroy = false;
 	}
 
@@ -56,45 +57,12 @@ public class CircleView implements FormsView{
 		g.fillOval(newCircle.getX()-(newCircle.getRadius()), newCircle.getY()-(newCircle.getRadius()), newCircle.getRadius()*2, newCircle.getRadius()*2);
 	}
 	
-	/**
-	 * This method informs the form is has been deleted
-	 */
-	@Override
-	public void delete(){
-		toDestroy = true;
 
-		if(formListener != null)
-			formListener.updateForm(this);
-	}
 
-	/**
-	 * Function that move a FormView, and then notify the form from our model of a change
-	 * @param shiftX (ReleaseClickPosition - PressClickPosition).x
-	 * @param shiftY (ReleaseClickPosition - PressClickPosition).y
-	 */
-	@Override
-	public void move(int shiftX, int shiftY){
-		posX += shiftX;
-		posY += shiftY;
 
-		if(formListener != null)
-			formListener.updateForm(this);
-	}
-
-	/**
-	 * Function that resize a FormView, and then notify the form from our model of a change
-	 * @param newX
-	 * @param newY
-	 */
-	@Override
-	public void resize(int newX, int newY) {
-
-		int shiftX = newX - posX;
-		int shiftY = newY - posY;
-		radius = (int) Math.sqrt( shiftX*shiftX + shiftY*shiftY );
-
-		if(formListener != null)
-			formListener.updateForm(this);
+	public Form getAssociatedForm()
+	{
+		return formAssociated;
 	}
 
 }

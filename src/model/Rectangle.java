@@ -35,12 +35,10 @@ public class Rectangle extends Form{
 
 	public void setHeight(int height) {
 		this.height = height;
-		fireChange();
 	}
 	
 	public void setWidth(int width) {
 		this.width = width;
-		fireChange();
 	}
 	
 	// Methods
@@ -54,16 +52,57 @@ public class Rectangle extends Form{
 	}
 
 	/**
-	 * This method sets the circle to "not alive" when it is updated.
+	 * This method informs the form it has been deleted
 	 */
-	@Override
-	public void updateForm(Object form) {
-		boolean isAlive = ((RectangleView) form).isToDestroy() == false;
-		setXY(((RectangleView) form).getX(), ((RectangleView) form).getY());
+	public void delete(){
+		fireBackupMemento();
+		setAlive(false);
 
-		width = ((RectangleView) form).getWidth();
-		height = ((RectangleView) form).getHeight();
+		fireChange();
+	}
+	/**
+	 * Function that move a FormView, and then notify the form from our model of a change
+	 * @param shiftX (ReleaseClickPosition - PressClickPosition).x
+	 * @param shiftY (ReleaseClickPosition - PressClickPosition).y
+	 */
+	public void move(int shiftX, int shiftY){
 
-		setAlive(isAlive);
+		fireBackupMemento();
+		setXY(getX()+shiftX, getY()+shiftY);
+		fireChange();
+	}
+
+	/**
+	 * Function that resize a FormView, and then notify the form from our model of a change
+	 * @param newX
+	 * @param newY
+	 */
+	public void resize(int newX, int newY) {
+
+		fireBackupMemento();
+		int shiftX = newX - getX();
+		int shiftY = newY - getY();
+
+		double newRadius = (double) Math.sqrt( shiftX*shiftX + shiftY*shiftY );
+		double currRadius = (double) Math.sqrt( width*width + height*height );
+
+		if(currRadius > 0)
+		{
+			//we compute the new scale from the current radius and the new one
+			double scale = newRadius / currRadius;
+
+			//we compute the new W and H
+			int newWidth = (int) ( (double)scale * width);
+			int newHeight = (int) ( (double)scale * height);
+
+			//we re center around the new W and H
+			setXY((int) (getX() + width/2 - newWidth/2.f), (int)(getY() + height/2 - newHeight/2.f) );
+
+			//we apply the new W and H
+			width = newWidth;
+			height = newHeight;
+		}
+
+		fireChange();
 	}
 }

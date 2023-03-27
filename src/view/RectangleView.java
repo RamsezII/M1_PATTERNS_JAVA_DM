@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.Graphics;
+
+import model.Form;
 import model.Rectangle;
 import util.listener.FormListener;
 
@@ -10,7 +12,7 @@ import util.listener.FormListener;
 public class RectangleView implements FormsView{
 	private int posX;
 	private int posY;
-	private FormListener formListener;
+	private Form associatedForm;
 	private boolean toDestroy;
 	private int height;
 	private int width;
@@ -22,14 +24,14 @@ public class RectangleView implements FormsView{
 	 * @param posY
 	 * @param width
 	 * @param height
-	 * @param formListener
+	 * @param associatedForm
 	 */
-	public RectangleView(int posX, int posY, int width, int height, FormListener formListener) {
+	public RectangleView(int posX, int posY, int width, int height, Form associatedForm) {
 		this.posX = posX;
 		this.posY = posY;
 		this.width = width;
 		this.height = height;
-		this.formListener = formListener;
+		this.associatedForm = associatedForm;
 		toDestroy = false;
 	}
 	
@@ -63,62 +65,10 @@ public class RectangleView implements FormsView{
 		g.fillRect(newRectangle.getX(), newRectangle.getY(), newRectangle.getWidth(), newRectangle.getHeight()); // Fills the rectangle
 	}
 
-	/**
-	 * This method informs the form it has been deleted
-	 */
+
+
 	@Override
-	public void delete(){
-		toDestroy = true;
-		if(formListener != null)
-			formListener.updateForm(this);
-	}
-	/**
-	 * Function that move a FormView, and then notify the form from our model of a change
-	 * @param shiftX (ReleaseClickPosition - PressClickPosition).x
-	 * @param shiftY (ReleaseClickPosition - PressClickPosition).y
-	 */
-	@Override
-	public void move(int shiftX, int shiftY){
-		posX += shiftX;
-		posY += shiftY;
-
-		if(formListener != null)
-			formListener.updateForm(this);
-	}
-
-	/**
-	 * Function that resize a FormView, and then notify the form from our model of a change
-	 * @param newX
-	 * @param newY
-	 */
-	@Override
-	public void resize(int newX, int newY) {
-
-		int shiftX = newX - posX;
-		int shiftY = newY - posY;
-
-		double newRadius = (double) Math.sqrt( shiftX*shiftX + shiftY*shiftY );
-		double currRadius = (double) Math.sqrt( width*width + height*height );
-
-		if(currRadius > 0)
-		{
-			//we compute the new scale from the current radius and the new one
-			double scale = newRadius / currRadius;
-
-			//we compute the new W and H
-			int newWidth = (int) ( (double)scale * width);
-			int newHeight = (int) ( (double)scale * height);
-
-			//we re center around the new W and H
-			posX += width/2 - newWidth/2.f;
-			posY += height/2 - newHeight/2.f;
-
-			//we apply the new W and H
-			width = newWidth;
-			height = newHeight;
-		}
-
-		if(formListener != null)
-			formListener.updateForm(this);
+	public Form getAssociatedForm() {
+		return associatedForm;
 	}
 }
