@@ -13,6 +13,7 @@ public class RectangleView implements FormsView{
 	private int posY;
 	private int height;
 	private int width;
+	private boolean toDestroy;
 	
 	/**
 	 * The constructor of the view. Takes dimensions and listener on a form.
@@ -29,10 +30,13 @@ public class RectangleView implements FormsView{
 		this.width = width;
 		this.height = height;
 		this.formListener = formListener;
+		toDestroy = false;
 	}
 	
 	//Getters
-	
+
+	public boolean isToDestroy() { return toDestroy; }
+
 	public int getX() {
 		return this.posX;
 	}
@@ -64,6 +68,15 @@ public class RectangleView implements FormsView{
 	 */
 	@Override
 	public void delete(){
+		toDestroy = true;
+		if(formListener != null)
+			formListener.updateForm(this);
+	}
+	@Override
+	public void move(int shiftX, int shiftY){
+		posX += shiftX;
+		posY += shiftY;
+
 		if(formListener != null)
 			formListener.updateForm(this);
 	}

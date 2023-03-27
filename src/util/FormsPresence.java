@@ -6,7 +6,7 @@ import view.FormsView;
 /**
  * This class represents a presence of forms in the drawing panel, and authorized methods.
  */
-public class FormsPresence implements State{	
+public class FormsPresence implements State{	//to remove
 	public FormsPresence() {}
 
 	/**
@@ -15,6 +15,6 @@ public class FormsPresence implements State{
 	@Override
 	public void remove(FormsView fV, Model m) {
 		fV.delete();
-		m.deleteForm();
+		m.updateFormsFromController();
 	}
 }

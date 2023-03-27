@@ -12,6 +12,7 @@ public class CircleView implements FormsView{
 	private int posY;
 	private int radius;
 	private FormListener formListener;
+	private boolean toDestroy = false;
 	
 	/**
 	 * The constructor of the view. Takes dimensions and listener on a form.
@@ -26,10 +27,12 @@ public class CircleView implements FormsView{
 		this.posY = posY;
 		this.radius = radius;
 		this.formListener = formListener;
+		this.toDestroy = false;
 	}
-	
+
+
 	// Getters
-	
+	public boolean isToDestroy() { return toDestroy; }
 	public int getX() {
 		return this.posX;
 	}
@@ -56,6 +59,17 @@ public class CircleView implements FormsView{
 	 */
 	@Override
 	public void delete(){
+		toDestroy = true;
+
+		if(formListener != null)
+			formListener.updateForm(this);
+	}
+
+	@Override
+	public void move(int shiftX, int shiftY){
+		posX += shiftX;
+		posY += shiftY;
+
 		if(formListener != null)
 			formListener.updateForm(this);
 	}

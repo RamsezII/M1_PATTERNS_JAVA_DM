@@ -51,9 +51,9 @@ public abstract class Form extends AbstractListenableModel implements FormListen
 	 * @param vx
 	 * @param vy
 	 */
-	public void move(float vx, float vy){
-		x += vx;
-		y += vy;
-		fireChange();
+	public void setXY(int x, int y){
+		this.x = x;
+		this.y = y;
+		fireChange();//useless for now
 	}
 }

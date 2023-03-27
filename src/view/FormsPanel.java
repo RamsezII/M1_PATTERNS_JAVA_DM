@@ -22,6 +22,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	//
 	private int x;
 	private int y;
+	private FormsView selectedFormOnPress;
 	//
 
 	private Window parent;
@@ -40,6 +41,7 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		this.y = 0;
 		this.refModel = model;
 		refModel.setListener(this);
+		selectedFormOnPress = null;
 	}
 	
 	/**
@@ -118,6 +120,12 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 	public void mouseClicked(MouseEvent e) {
 		if(this.parent.getMode() == Modes.Remove) {
 			FormsView formSelectionnee = getCollisionWithView(e.getX(), e.getY());
+
+			if(formSelectionnee != null)
+			{
+				formSelectionnee.delete();
+				refModel.updateFormsFromController();
+			}
 		}
 	}
 		
@@ -129,8 +137,9 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		this.x = e.getX();
 		this.y = e.getY();
 
-		if(this.parent.getMode() == Modes.Remove) {
+		if(parent.getMode() == Modes.Move ) {
 			FormsView formSelectionnee = getCollisionWithView(e.getX(), e.getY());
+			selectedFormOnPress = formSelectionnee;//even if formSelectionnee is null
 		}
 	}
 
@@ -152,6 +161,15 @@ public class FormsPanel extends JPanel implements MouseListener, ModelListener{
 		else if(this.parent.getMode() == Modes.Rectangle) {
 			refModel.createRectangle(xmin, ymin, xmax-xmin,ymax-ymin);
 		}
+		else if(parent.getMode() == Modes.Move ) {
+			if(selectedFormOnPress != null)
+			{
+				selectedFormOnPress.move(e.getX() - x, e.getY() - y);
+				refModel.updateFormsFromController();
+			}
+		}
+
+		selectedFormOnPress = null;
 	}
 
 	@Override

@@ -1,5 +1,8 @@
 package model;
 
+import view.CircleView;
+import view.RectangleView;
+
 public class Rectangle extends Form{
 	private int height;
 	private int width;
@@ -39,6 +42,8 @@ public class Rectangle extends Form{
 
 	@Override
 	public void updateForm(Object form) {
-		setAlive(false);
+		boolean isAlive = ((RectangleView) form).isToDestroy() == false;
+		setXY(((RectangleView) form).getX(), ((RectangleView) form).getY());
+		setAlive(isAlive);
 	}
 }
