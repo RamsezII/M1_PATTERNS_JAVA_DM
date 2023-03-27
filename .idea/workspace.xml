@@ -2,36 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb21bdf3-1be1-403f-b73e-f6825f6adf4a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/M1_PATTERNS_JAVA_DM.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/M1_PATTERNS_JAVA_DM/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/M1_PATTERNS_JAVA_DM/.project" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/M1_PATTERNS_JAVA_DM/bin/Circle.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/M1_PATTERNS_JAVA_DM/bin/Rectangle.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/M1_PATTERNS_JAVA_DM/bin/Redo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/M1_PATTERNS_JAVA_DM/bin/Remove.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/M1_PATTERNS_JAVA_DM/bin/Undo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/command/Memento.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/Model.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/util/listener/FormListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Circle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/ContainerForms.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/ContainerForms.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Form.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Form.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Rectangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/listenable/AbstractListenableModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/listenable/AbstractListenableModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/listenable/ListenableModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/listener/ContainerFormsListener.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/viewcontroller/CircleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/viewcontroller/CircleView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/viewcontroller/FormsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/viewcontroller/FormsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/viewcontroller/ModeSelectorButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/viewcontroller/ModeSelectorButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/viewcontroller/RectangleView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/viewcontroller/RectangleView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/viewcontroller/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/viewcontroller/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/command/Memento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/command/Memento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Model.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,8 +40,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
   </component>
   <component name="RunManager">
-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+    <configuration name="Window" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="view.Window" />
       <module name="M1_PATTERNS_JAVA_DM" />
       <method v="2">
         <option name="Make" enabled="true" />
